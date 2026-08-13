@@ -10,7 +10,7 @@
         <div class="row align-items-center g-4">
             <div class="col-lg-7 text-center text-lg-start">
                 <span class="badge bg-warning text-dark font-weight-bold px-3 py-2 rounded-pill mb-3 text-uppercase shadow-sm">
-                    <i class="fa-solid fa-house-chimney me-1"></i> Kedai Rumahan Candi Semarang
+                    <i class="fa-solid fa-house-chimney me-1"></i> Kedai Marjuki'S
                 </span>
                 <h1 class="display-4 fw-extrabold mb-3 text-white">
                     Kuliner Masakan <br>

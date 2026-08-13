@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 12000,
                 'stock' => 30,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/rames.jpg',
             ],
             [
                 'name' => 'Indomie Biasa',
@@ -106,7 +106,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 1500,
                 'stock' => 50,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/mendoan.jpg',
             ],
             [
                 'name' => 'Tahu Bakso',
@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 2500,
                 'stock' => 50,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/tahu-bakso.jpg',
             ],
             [
                 'name' => 'Bakwan Jagung',
@@ -126,7 +126,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 1500,
                 'stock' => 50,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/bakwan-jagung.jpg',
             ],
             [
                 'name' => 'Es Teh',
