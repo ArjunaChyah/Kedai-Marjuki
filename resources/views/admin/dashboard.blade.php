@@ -43,7 +43,7 @@
                 </div>
                 <div>
                     <span class="text-muted text-xs d-block font-weight-bold uppercase">Total Pesanan</span>
-                    <h3 class="fw-extrabold text-dark mb-0">{{ $totalOrders }}</h3>
+                    <h3 class="fw-extrabold text-dark mb-0" id="stat-total-orders">{{ $totalOrders }}</h3>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div>
                     <span class="text-muted text-xs d-block font-weight-bold uppercase">Pesanan Pending</span>
-                    <h3 class="fw-extrabold text-dark mb-0">{{ $pendingOrders }}</h3>
+                    <h3 class="fw-extrabold text-dark mb-0" id="stat-pending-orders">{{ $pendingOrders }}</h3>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div>
                     <span class="text-muted text-xs d-block font-weight-bold uppercase">Total Pendapatan</span>
-                    <h4 class="fw-extrabold text-success mb-0">Rp{{ number_format($totalRevenue, 0, ',', '.') }}</h4>
+                    <h4 class="fw-extrabold text-success mb-0" id="stat-revenue">Rp{{ number_format($totalRevenue, 0, ',', '.') }}</h4>
                 </div>
             </div>
         </div>
@@ -147,3 +147,23 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Live update stats on dashboard
+    setInterval(() => {
+        fetch('{{ route("admin.live-stats") }}')
+            .then(res => res.json())
+            .then(data => {
+                const totalOrdersEl = document.getElementById('stat-total-orders');
+                const pendingOrdersEl = document.getElementById('stat-pending-orders');
+                const revenueEl = document.getElementById('stat-revenue');
+
+                if (totalOrdersEl) totalOrdersEl.textContent = data.total_orders;
+                if (pendingOrdersEl) pendingOrdersEl.textContent = data.pending_orders;
+                if (revenueEl) revenueEl.textContent = data.formatted_revenue;
+            })
+            .catch(() => {});
+    }, 6000);
+</script>
+@endpush

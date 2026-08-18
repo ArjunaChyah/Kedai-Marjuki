@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
 */
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/live-stats', [AdminDashboardController::class, 'liveStats'])->name('live-stats');
 
     // Products
     Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');

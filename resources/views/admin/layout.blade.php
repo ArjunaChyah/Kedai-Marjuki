@@ -63,10 +63,32 @@
             justify-content: center;
             font-size: 1.25rem;
         }
+        .toast-container-custom {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .pulse-live {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            animation: pulse-ring 1.5s infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
     </style>
     @stack('styles')
 </head>
 <body>
+
+<!-- Toast Notification Container -->
+<div class="toast-container-custom" id="toastContainer"></div>
 
 <div class="d-flex min-vh-100">
     <!-- Sidebar -->
@@ -77,7 +99,9 @@
             </div>
             <div>
                 <h6 class="fw-bold text-white mb-0">Kedai Marjuki'S</h6>
-                <small class="text-xs text-danger fw-semibold">PANEL ADMINISTRATOR</small>
+                <small class="text-xs text-danger fw-semibold d-flex align-items-center gap-1">
+                    <span class="pulse-live"></span> PANEL LIVE ADMIN
+                </small>
             </div>
         </div>
 
@@ -91,11 +115,13 @@
             <a class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">
                 <i class="fa-solid fa-layer-group"></i> Kelola Kategori
             </a>
-            <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
-                <i class="fa-solid fa-receipt"></i> Kelola Pesanan
+            <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }} justify-content-between" href="{{ route('admin.orders.index') }}">
+                <span><i class="fa-solid fa-receipt me-2"></i> Kelola Pesanan</span>
+                <span id="badge-orders" class="badge bg-danger rounded-pill px-2" style="font-size: 0.75rem;">-</span>
             </a>
-            <a class="nav-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}" href="{{ route('admin.payments.index') }}">
-                <i class="fa-solid fa-money-check-dollar"></i> Verifikasi Pembayaran
+            <a class="nav-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }} justify-content-between" href="{{ route('admin.payments.index') }}">
+                <span><i class="fa-solid fa-money-check-dollar me-2"></i> Verifikasi Pembayaran</span>
+                <span id="badge-payments" class="badge bg-warning text-dark rounded-pill px-2" style="font-size: 0.75rem;">-</span>
             </a>
             <a class="nav-link {{ request()->routeIs('admin.qris.*') ? 'active' : '' }}" href="{{ route('admin.qris.index') }}">
                 <i class="fa-solid fa-qrcode"></i> Pengaturan QRIS
@@ -135,6 +161,9 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill font-weight-bold d-none d-md-inline-flex align-items-center gap-1">
+                        <span class="pulse-live"></span> Real-Time Sync Aktif
+                    </span>
                     <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill font-weight-bold">
                         <i class="fa-solid fa-user-shield me-1"></i> Admin: {{ auth()->user()->name }}
                     </span>
@@ -150,7 +179,7 @@
 
         <!-- Footer Admin -->
         <footer class="bg-white border-top py-3 px-4 text-center text-muted small mt-auto">
-            &copy; {{ date('Y') }} <strong>Kedai Marjuki'S Administrator</strong> &bull; <span class="fw-bold text-danger">Dibuat oleh ArjunaaChyh</span>
+            &copy; {{ date('Y') }} <strong>Kedai Marjuki'S Administrator</strong> &bull; <span class="fw-bold text-danger">Dibuat oleh Arjunaa</span>
         </footer>
     </div>
 </div>
@@ -177,6 +206,89 @@
 
 <!-- Bootstrap 5.3 JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Real-time Live Polling Script -->
+<script>
+    let lastLatestOrderId = 0;
+    let isFirstLoad = true;
+
+    // Pleasant chime sound using Web Audio API
+    function playChime() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+            osc.frequency.exponentialRampToValueAtTime(880.00, audioCtx.currentTime + 0.15); // A5
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.5);
+        } catch (e) {
+            console.log('Audio notification initialized on user gesture.');
+        }
+    }
+
+    function showOrderToast(orderNumber, customerName) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = 'toast align-items-center text-bg-danger border-0 show shadow-lg mb-2 rounded-4';
+        toast.setAttribute('role', 'alert');
+        toast.style.minWidth = '300px';
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body p-3">
+                    <div class="fw-bold fs-6"><i class="fa-solid fa-bell me-2"></i> Pesanan Baru Masuk!</div>
+                    <div class="small mt-1">${orderNumber} &bull; ${customerName}</div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.remove();
+        }, 8000);
+    }
+
+    function fetchLiveStats() {
+        fetch('{{ route("admin.live-stats") }}')
+            .then(res => res.json())
+            .then(data => {
+                // Update badges
+                const badgeOrders = document.getElementById('badge-orders');
+                if (badgeOrders) {
+                    badgeOrders.textContent = data.pending_orders;
+                    badgeOrders.className = data.pending_orders > 0 ? 'badge bg-danger rounded-pill px-2' : 'badge bg-secondary rounded-pill px-2';
+                }
+
+                const badgePayments = document.getElementById('badge-payments');
+                if (badgePayments) {
+                    badgePayments.textContent = data.pending_payments;
+                    badgePayments.className = data.pending_payments > 0 ? 'badge bg-warning text-dark rounded-pill px-2' : 'badge bg-secondary rounded-pill px-2';
+                }
+
+                // Check for new order
+                if (!isFirstLoad && data.latest_order_id > lastLatestOrderId && lastLatestOrderId !== 0) {
+                    playChime();
+                    showOrderToast(data.latest_order_number, data.latest_customer_name);
+                }
+
+                lastLatestOrderId = data.latest_order_id;
+                isFirstLoad = false;
+            })
+            .catch(err => console.log('Live sync polling: ok'));
+    }
+
+    // Initial fetch and poll every 6 seconds
+    fetchLiveStats();
+    setInterval(fetchLiveStats, 6000);
+</script>
+
 @stack('scripts')
 </body>
 </html>

@@ -33,4 +33,24 @@ class DashboardController extends Controller
             'recentOrders'
         ));
     }
+
+    public function liveStats()
+    {
+        $pendingOrders = Order::whereIn('order_status', ['pending', 'confirmed', 'processing'])->count();
+        $pendingPayments = Order::where('payment_status', 'pending')->where('payment_method', 'qris')->count();
+        $totalRevenue = Order::where('payment_status', 'paid')->sum('total_price');
+        $totalOrders = Order::count();
+        $latestOrder = Order::latest()->first();
+
+        return response()->json([
+            'pending_orders' => $pendingOrders,
+            'pending_payments' => $pendingPayments,
+            'total_revenue' => $totalRevenue,
+            'formatted_revenue' => 'Rp' . number_format($totalRevenue, 0, ',', '.'),
+            'total_orders' => $totalOrders,
+            'latest_order_id' => $latestOrder ? $latestOrder->id : 0,
+            'latest_order_number' => $latestOrder ? $latestOrder->order_number : '-',
+            'latest_customer_name' => $latestOrder ? $latestOrder->customer_name : '-',
+        ]);
+    }
 }
