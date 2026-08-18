@@ -18,12 +18,17 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f1f5f9;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.94) 100%), url('{{ asset('foto_website/warung.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #1e293b;
         }
         .admin-sidebar {
             width: 260px;
-            background-color: #0f172a;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: #94a3b8;
             min-height: 100vh;
             transition: all 0.3s ease;
@@ -45,6 +50,9 @@
         .admin-content {
             flex: 1;
             min-width: 0;
+            background: rgba(241, 245, 249, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .badge-stat {
             width: 48px;
@@ -142,7 +150,7 @@
 
         <!-- Footer Admin -->
         <footer class="bg-white border-top py-3 px-4 text-center text-muted small mt-auto">
-            &copy; {{ date('Y') }} <strong>Kedai Marjuki'S Administrator</strong> &bull; <span class="fw-bold text-danger">Dibuat oleh Arjunaa</span>
+            &copy; {{ date('Y') }} <strong>Kedai Marjuki'S Administrator</strong> &bull; <span class="fw-bold text-danger">Dibuat oleh ArjunaaChyh</span>
         </footer>
     </div>
 </div>
