@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layout')
 
 @section('title', 'Dashboard Administrator - Kedai Marjuki\'S')
 @section('page_title', 'Dashboard Ringkasan Kedai')
