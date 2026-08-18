@@ -2,17 +2,7 @@
 
 <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden product-card hover-lift transition-all">
     <div class="position-relative overflow-hidden bg-light" style="height: 200px;">
-        @if ($product->image)
-            @if (Str::startsWith($product->image, 'http'))
-                <img src="{{ $product->image }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $product->name }}">
-            @elseif (file_exists(public_path('foto_website/' . $product->image)))
-                <img src="{{ asset('foto_website/' . $product->image) }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $product->name }}">
-            @else
-                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $product->name }}">
-            @endif
-        @else
-            <img src="{{ asset('foto_website/etalase.jpg') }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $product->name }}">
-        @endif
+        <img src="{{ $product->image_url }}" class="card-img-top w-100 h-100 object-fit-cover" alt="{{ $product->name }}">
 
         <span class="position-absolute top-0 start-0 m-3 badge bg-danger text-white rounded-pill shadow-sm px-2.5 py-1.5 font-weight-bold">
             {{ $product->category->name ?? 'Menu' }}

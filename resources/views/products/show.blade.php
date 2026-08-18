@@ -18,19 +18,7 @@
         <div class="card-body p-4 p-lg-5">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-5 text-center">
-                    <div class="bg-light rounded-4 p-4 border position-relative overflow-hidden" style="max-height: 350px;">
-                        @if ($product->image)
-                            @if (Str::startsWith($product->image, 'http'))
-                                <img src="{{ $product->image }}" class="img-fluid rounded-3 object-fit-contain" style="max-height: 300px;" alt="{{ $product->name }}">
-                            @elseif (file_exists(public_path('foto_website/' . $product->image)))
-                                <img src="{{ asset('foto_website/' . $product->image) }}" class="img-fluid rounded-3 object-fit-contain" style="max-height: 300px;" alt="{{ $product->name }}">
-                            @else
-                                <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded-3 object-fit-contain" style="max-height: 300px;" alt="{{ $product->name }}">
-                            @endif
-                        @else
-                            <img src="{{ asset('foto_website/etalase.jpg') }}" class="img-fluid rounded-3 object-fit-cover w-100 h-100" style="max-height: 300px;" alt="{{ $product->name }}">
-                        @endif
-                    </div>
+                        <img src="{{ $product->image_url }}" class="img-fluid rounded-3 object-fit-cover w-100 h-100" style="max-height: 300px;" alt="{{ $product->name }}">
                 </div>
 
                 <div class="col-lg-7">
