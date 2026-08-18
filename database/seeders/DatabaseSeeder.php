@@ -136,7 +136,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 3000,
                 'stock' => 100,
                 'status' => 'available',
-                'image' => 'produk/esteh.jpg',
+                'image' => 'produk/es-teh.jpg',
             ],
             [
                 'name' => 'Es Jeruk',
@@ -146,7 +146,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 5000,
                 'stock' => 80,
                 'status' => 'available',
-                'image' => 'produk/esjeruk.jpg',
+                'image' => 'produk/es-jeruk.jpg',
             ],
         ];
 
