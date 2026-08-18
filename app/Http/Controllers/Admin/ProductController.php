@@ -70,7 +70,10 @@ class ProductController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            $file = $request->file('image');
+            $fileName = time() . '_' . Str::slug($validated['name']) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('foto_website/produk'), $fileName);
+            $imagePath = 'produk/' . $fileName;
         }
 
         Product::create([
@@ -125,10 +128,10 @@ class ProductController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $product->image = $request->file('image')->store('products', 'public');
+            $file = $request->file('image');
+            $fileName = time() . '_' . Str::slug($validated['name']) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('foto_website/produk'), $fileName);
+            $product->image = 'produk/' . $fileName;
         }
 
         $product->name = $validated['name'];

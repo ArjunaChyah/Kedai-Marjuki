@@ -57,11 +57,10 @@
                     <div class="col-md-6">
                         <label for="image" class="form-label font-weight-bold text-dark small">Ganti Foto Produk (Opsional)</label>
                         <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                        @if ($product->image)
-                            <div class="mt-2 text-muted small">
-                                Gambar saat ini: <a href="{{ asset('storage/' . $product->image) }}" target="_blank">Lihat Gambar</a>
-                            </div>
-                        @endif
+                        <div class="mt-2 text-muted small d-flex align-items-center gap-2">
+                            <span>Gambar saat ini:</span>
+                            <img src="{{ $product->image_url }}" class="rounded border object-fit-cover" style="width: 40px; height: 40px;" alt="Preview">
+                        </div>
                     </div>
                 </div>
 

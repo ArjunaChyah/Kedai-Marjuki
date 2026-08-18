@@ -42,12 +42,8 @@
                 @forelse ($products as $product)
                     <tr>
                         <td class="ps-4">
-                            <div class="bg-light rounded p-1 border" style="width: 50px; height: 50px;">
-                                @if ($product->image)
-                                    <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : asset('storage/' . $product->image) }}" class="w-100 h-100 object-fit-cover rounded" alt="{{ $product->name }}">
-                                @else
-                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted"><i class="fa-solid fa-image"></i></div>
-                                @endif
+                            <div class="bg-light rounded p-1 border overflow-hidden" style="width: 50px; height: 50px;">
+                                <img src="{{ $product->image_url }}" class="w-100 h-100 object-fit-cover rounded" alt="{{ $product->name }}">
                             </div>
                         </td>
                         <td>
