@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 8000,
                 'stock' => 25,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/soto.jpg',
             ],
             [
                 'name' => 'Rames',
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 8000,
                 'stock' => 40,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/indomie.jpeg',
             ],
             [
                 'name' => 'Mendoan',

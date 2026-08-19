@@ -63,23 +63,49 @@ class Product extends Model
             }
         }
 
-        // Auto-detect matching image file in public/foto_website/produk/
         $slug = $this->slug ?: Str::slug($this->name);
         $cleanName = str_replace('-', '', $slug);
 
-        $possibleFiles = [
-            "produk/{$slug}.jpg",
-            "produk/{$slug}.png",
-            "produk/{$slug}.jpeg",
-            "produk/{$cleanName}.jpg",
-            "produk/{$cleanName}.png",
-            "{$slug}.jpg",
-            "{$slug}.png",
+        // Spelling variations (telor <-> telur, indomie-telor <-> indomie)
+        $variations = [
+            $slug,
+            $cleanName,
+            str_replace('telor', 'telur', $slug),
+            str_replace('telur', 'telor', $slug),
+            str_replace('telor', 'telur', $cleanName),
+            str_replace('telur', 'telor', $cleanName),
+            explode('-', $slug)[0], // e.g. 'indomie' from 'indomie-telor'
+            explode('-', $slug)[1] ?? '',
         ];
 
-        foreach ($possibleFiles as $file) {
-            if (file_exists(public_path('foto_website/' . $file))) {
-                return asset('foto_website/' . $file);
+        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+        foreach ($variations as $var) {
+            if (empty($var)) continue;
+            foreach ($extensions as $ext) {
+                $checkPaths = [
+                    "foto_website/produk/{$var}.{$ext}",
+                    "foto_website/{$var}.{$ext}",
+                ];
+                foreach ($checkPaths as $p) {
+                    if (file_exists(public_path($p))) {
+                        return asset($p);
+                    }
+                }
+            }
+        }
+
+        // Fuzzy match: scan files in public/foto_website/produk/
+        $produkDir = public_path('foto_website/produk');
+        if (is_dir($produkDir)) {
+            $files = scandir($produkDir);
+            foreach ($files as $file) {
+                if ($file === '.' || $file === '..') continue;
+                $fileBase = strtolower(pathinfo($file, PATHINFO_FILENAME));
+                $primaryWord = explode('-', $slug)[0];
+                if (str_contains($slug, $fileBase) || str_contains($fileBase, $primaryWord)) {
+                    return asset('foto_website/produk/' . $file);
+                }
             }
         }
 
