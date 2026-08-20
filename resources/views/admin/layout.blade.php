@@ -179,7 +179,7 @@
 
         <!-- Footer Admin -->
         <footer class="bg-white border-top py-3 px-4 text-center text-muted small mt-auto">
-            &copy; {{ date('Y') }} <strong>Kedai Marjuki'S Administrator</strong> &bull; <span class="fw-bold text-danger">Dibuat oleh Arjunachyh</span>
+            &copy; {{ date('Y') }} <strong>Kedai Marjuki'S Administrator</strong> &bull; <span class="fw-bold text-danger">Dibuat oleh {{ $creatorName }}</span>
         </footer>
     </div>
 </div>

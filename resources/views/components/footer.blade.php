@@ -32,11 +32,11 @@
                 <h6 class="fw-bold text-uppercase mb-3 text-white-50">Lokasi &amp; Kontak</h6>
                 <p class="text-white-50 small mb-2 d-flex align-items-start">
                     <i class="fa-solid fa-location-dot me-2 text-danger mt-1"></i>
-                    <span>JL. Jomblang Perbalan No 800 Candi, Candisari, Semarang, Jawa Tengah (Halaman Rumah)</span>
+                    <span>{{ $storeAddress }}</span>
                 </p>
                 <p class="text-white-50 small mb-2 d-flex align-items-center">
                     <i class="fa-solid fa-phone me-2 text-success"></i>
-                    <span>0882005116301</span>
+                    <span>{{ $storePhone }}</span>
                 </p>
                 <p class="text-white-50 small mb-0 d-flex align-items-center">
                     <i class="fa-solid fa-clock me-2 text-warning"></i>
@@ -52,7 +52,7 @@
                 &copy; {{ date('Y') }} <strong>Kedai Marjuki'S</strong>. Hak Cipta Akan Selalu Dilindungi.
             </div>
             <div class="fw-semibold text-warning">
-                Dibuat oleh ArjunaaChyh
+                Dibuat oleh {{ $creatorName }}
             </div>
         </div>
     </div>

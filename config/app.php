@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'creator' => env('APP_CREATOR', 'ArjunaaChyh'),
+    'phone' => env('APP_PHONE', '0882005116301'),
+    'address' => env('APP_ADDRESS', 'JL. Jomblang Perbalan No 800 Candi, Candisari, Semarang, Jawa Tengah'),
 ];
