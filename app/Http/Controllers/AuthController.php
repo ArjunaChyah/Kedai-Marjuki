@@ -89,12 +89,11 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string'],
-            'password' => ['required', 'string', 'min:4'],
+            'password' => ['required', 'string'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'email.required' => 'Email atau Username wajib diisi.',
             'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal 4 karakter.',
         ]);
 
         $email = strtolower(trim($validated['email']));
