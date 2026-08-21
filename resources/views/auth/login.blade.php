@@ -45,24 +45,31 @@
 
         <!-- Demo Accounts Box -->
         <div class="p-3 bg-light rounded-3 border mt-4">
-            <h6 class="fw-bold text-dark small mb-2"><i class="fa-solid fa-key text-warning me-1"></i> Akun Demo Login:</h6>
+            <h6 class="fw-bold text-dark small mb-2"><i class="fa-solid fa-bolt text-warning me-1"></i> Quick Demo Login (1-Klik):</h6>
             <div class="row g-2 text-xs">
                 <div class="col-12 col-sm-6">
-                    <div class="p-2 bg-white rounded border">
-                        <strong class="text-danger">Admin:</strong><br>
+                    <button type="button" onclick="fillLogin('admin@marjukis.test', 'password')" class="btn btn-outline-danger btn-sm w-100 text-start p-2 rounded border bg-white">
+                        <strong class="text-danger"><i class="fa-solid fa-user-shield me-1"></i> Admin Kedai:</strong><br>
                         admin@marjukis.test<br>
-                        Pass: <code>password</code>
-                    </div>
+                        <small class="text-muted">Klik untuk isi otomatis</small>
+                    </button>
                 </div>
                 <div class="col-12 col-sm-6">
-                    <div class="p-2 bg-white rounded border">
-                        <strong class="text-primary">Pembeli:</strong><br>
+                    <button type="button" onclick="fillLogin('user@marjukis.test', 'password')" class="btn btn-outline-primary btn-sm w-100 text-start p-2 rounded border bg-white">
+                        <strong class="text-primary"><i class="fa-solid fa-user me-1"></i> Pembeli Demo:</strong><br>
                         user@marjukis.test<br>
-                        Pass: <code>password</code>
-                    </div>
+                        <small class="text-muted">Klik untuk isi otomatis</small>
+                    </button>
                 </div>
             </div>
         </div>
+
+        <script>
+            function fillLogin(email, password) {
+                document.getElementById('email').value = email;
+                document.getElementById('password').value = password;
+            }
+        </script>
 
         <div class="text-center mt-4">
             <p class="text-muted small mb-0">

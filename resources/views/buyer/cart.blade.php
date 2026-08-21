@@ -56,11 +56,7 @@
                                             <td class="ps-4">
                                                 <div class="d-flex align-items-center gap-3 py-2">
                                                     <div class="bg-light rounded p-1 border flex-shrink-0" style="width: 60px; height: 60px;">
-                                                        @if ($item->product->image)
-                                                            <img src="{{ Str::startsWith($item->product->image, 'http') ? $item->product->image : asset('storage/' . $item->product->image) }}" class="w-100 h-100 object-fit-cover rounded" alt="{{ $item->product->name }}">
-                                                        @else
-                                                            <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted"><i class="fa-solid fa-bowl-food"></i></div>
-                                                        @endif
+                                                        <img src="{{ $item->product->image_url }}" class="w-100 h-100 object-fit-cover rounded" alt="{{ $item->product->name }}">
                                                     </div>
                                                     <div>
                                                         <h6 class="fw-bold text-dark mb-0">{{ $item->product->name }}</h6>
