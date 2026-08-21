@@ -86,29 +86,25 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string'],
+            'phone' => ['required', 'string', 'max:20'],
             'password' => ['required', 'string'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
-            'email.required' => 'Email atau Username wajib diisi.',
+            'phone.required' => 'Nomor WhatsApp / HP wajib diisi.',
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        $email = strtolower(trim($validated['email']));
-        if (!str_contains($email, '@')) {
-            $email .= '@gmail.com';
-        }
+        $cleanPhone = preg_replace('/[^0-9]/', '', $validated['phone']);
+        $email = $cleanPhone ? $cleanPhone . '@marjukis.test' : Str::slug($validated['name']) . '@gmail.com';
 
-        $user = User::where('email', $email)->first();
+        $user = User::where('email', $email)->orWhere('phone', $validated['phone'])->first();
 
         if (!$user) {
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $email,
-                'phone' => $validated['phone'] ?? '0882005116301',
-                'address' => $validated['address'] ?? 'JL. Jomblang Perbalan No 800 Candi, Semarang',
+                'phone' => $validated['phone'],
+                'address' => 'Diambil / Makan di Tempat Kedai Marjuki\'S',
                 'password' => Hash::make($validated['password']),
                 'role' => 'buyer',
             ]);

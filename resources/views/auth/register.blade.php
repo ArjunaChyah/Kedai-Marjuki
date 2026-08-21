@@ -1,12 +1,17 @@
 @extends('layouts.auth')
 
-@section('title', 'Daftar Akun Baru - Kedai Marjuki\'S')
+@section('title', 'Daftar Cepat Pembeli - Kedai Marjuki\'S')
 
 @section('content')
 <div class="card auth-card bg-white p-4 p-md-5">
     <div class="card-body">
-        <h4 class="fw-bold text-dark mb-1">Daftar Akun Pembeli</h4>
-        <p class="text-muted small mb-4">Buat akun baru untuk mulai memesan makanan online</p>
+        <div class="text-center mb-3">
+            <span class="badge bg-danger-subtle text-danger px-3 py-1.5 rounded-pill font-weight-bold mb-2">
+                <i class="fa-solid fa-bolt me-1"></i> DAFTAR CEPAT 3 DETIK
+            </span>
+            <h4 class="fw-bold text-dark mb-1">Daftar Akun Pesan Kedai</h4>
+            <p class="text-muted small">Cukup isi nama & nomor HP untuk langsung pesan hidangan hangat!</p>
+        </div>
 
         <x-alert />
 
@@ -14,53 +19,38 @@
             @csrf
 
             <div class="mb-3">
-                <label for="name" class="form-label font-weight-bold text-dark small">Nama Lengkap</label>
+                <label for="name" class="form-label font-weight-bold text-dark small">Nama Pemesan</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" name="name" id="name" class="form-control border-start-0 ps-0" placeholder="Nama Anda" value="{{ old('name') }}" required autofocus>
+                    <input type="text" name="name" id="name" class="form-control border-start-0 ps-0" placeholder="Contoh: Budi / Siti" value="{{ old('name') }}" required autofocus>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label font-weight-bold text-dark small">Email</label>
-                <div class="input-group">
-                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" name="email" id="email" class="form-control border-start-0 ps-0" placeholder="nama@email.com" value="{{ old('email') }}" required>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="phone" class="form-label font-weight-bold text-dark small">Nomor WhatsApp</label>
+                <label for="phone" class="form-label font-weight-bold text-dark small">Nomor WhatsApp / HP</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-brands fa-whatsapp"></i></span>
-                    <input type="text" name="phone" id="phone" class="form-control border-start-0 ps-0" placeholder="0882005116301" value="{{ old('phone') }}" required>
+                    <input type="text" name="phone" id="phone" class="form-control border-start-0 ps-0" placeholder="081234567890" value="{{ old('phone') }}" required>
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label for="address" class="form-label font-weight-bold text-dark small">Alamat Lengkap Rumah</label>
-                <textarea name="address" id="address" class="form-control" rows="2" placeholder="Jl. Jomblang Perbalan No 800..." required>{{ old('address') }}</textarea>
+            <div class="mb-4">
+                <label for="password" class="form-label font-weight-bold text-dark small">Password Bebas</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
+                    <input type="password" name="password" id="password" class="form-control border-start-0 ps-0" placeholder="Isi angka/kata bebas (misal: 1234)" value="1234" required>
+                </div>
+                <small class="text-muted text-xs mt-1 d-block"><i class="fa-solid fa-circle-info text-info me-1"></i> Bebas berapa karakter saja tanpa batasan.</small>
             </div>
 
-            <div class="row g-2 mb-4">
-                <div class="col-md-6">
-                    <label for="password" class="form-label font-weight-bold text-dark small">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Min. 8 karakter" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="password_confirmation" class="form-label font-weight-bold text-dark small">Konfirmasi Password</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Ulangi password" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-danger w-100 py-2.5 font-weight-bold rounded-pill shadow-sm mb-3">
-                <i class="fa-solid fa-user-plus me-2"></i> Daftar Sekarang
+            <button type="submit" class="btn btn-danger w-100 py-3 font-weight-bold rounded-pill shadow-sm mb-3 fs-6">
+                <i class="fa-solid fa-utensils me-2"></i> Daftar & Langsung Pesan Menu
             </button>
         </form>
 
         <div class="text-center mt-3">
             <p class="text-muted small mb-0">
-                Sudah memiliki akun? <a href="{{ route('login') }}" class="text-danger fw-bold text-decoration-none">Masuk di sini</a>
+                Sudah punya akun? <a href="{{ route('login') }}" class="text-danger fw-bold text-decoration-none">Masuk Langsung</a>
             </p>
         </div>
     </div>
