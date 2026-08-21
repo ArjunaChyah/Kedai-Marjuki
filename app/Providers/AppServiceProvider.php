@@ -20,8 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('creatorName', config('app.creator', 'ArjunaaChyh'));
-        View::share('storePhone', config('app.phone', '0882005116301'));
-        View::share('storeAddress', config('app.address', 'JL. Jomblang Perbalan No 800 Candi, Candisari, Semarang, Jawa Tengah'));
+        // Read directly from .env for 100% instant single-source configuration
+        View::share('creatorName', env('APP_CREATOR', 'Arjuna Chyah'));
+        View::share('storePhone', env('APP_PHONE', '0882005116301'));
+        View::share('storeAddress', env('APP_ADDRESS', 'JL. Jomblang Perbalan No 800 Candi, Candisari, Semarang, Jawa Tengah'));
     }
 }
