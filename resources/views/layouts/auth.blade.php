@@ -52,7 +52,7 @@
                 @yield('content')
 
                 <div class="text-center mt-4 text-muted small">
-                    &copy; {{ date('Y') }} Kedai Marjuki'S &bull; <span class="fw-semibold text-danger">Dibuat oleh {{ $creatorName }}</span>
+                    &copy; {{ date('Y') }} Kedai Marjuki'S &bull; <span class="fw-semibold text-danger">Dibuat oleh ArjunaChyah</span>
                 </div>
             </div>
         </div>

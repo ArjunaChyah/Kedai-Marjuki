@@ -14,10 +14,10 @@
             @csrf
 
             <div class="mb-3">
-                <label for="email" class="form-label font-weight-bold text-dark small">Email Anda</label>
+                <label for="email" class="form-label font-weight-bold text-dark small">Email / Username / No. HP</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" name="email" id="email" class="form-control border-start-0 ps-0" placeholder="nama@email.com" value="{{ old('email') }}" required autofocus>
+                    <input type="text" name="email" id="email" class="form-control border-start-0 ps-0" placeholder="nama@email.com atau 0812..." value="{{ old('email') }}" required autofocus>
                 </div>
             </div>
 
@@ -43,37 +43,9 @@
             </button>
         </form>
 
-        <!-- Demo Accounts Box -->
-        <div class="p-3 bg-light rounded-3 border mt-4">
-            <h6 class="fw-bold text-dark small mb-2"><i class="fa-solid fa-bolt text-warning me-1"></i> Quick Demo Login (1-Klik):</h6>
-            <div class="row g-2 text-xs">
-                <div class="col-12 col-sm-6">
-                    <button type="button" onclick="fillLogin('admin@marjukis.test', 'password')" class="btn btn-outline-danger btn-sm w-100 text-start p-2 rounded border bg-white">
-                        <strong class="text-danger"><i class="fa-solid fa-user-shield me-1"></i> Admin Kedai:</strong><br>
-                        admin@marjukis.test<br>
-                        <small class="text-muted">Klik untuk isi otomatis</small>
-                    </button>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <button type="button" onclick="fillLogin('user@marjukis.test', 'password')" class="btn btn-outline-primary btn-sm w-100 text-start p-2 rounded border bg-white">
-                        <strong class="text-primary"><i class="fa-solid fa-user me-1"></i> Pembeli Demo:</strong><br>
-                        user@marjukis.test<br>
-                        <small class="text-muted">Klik untuk isi otomatis</small>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            function fillLogin(email, password) {
-                document.getElementById('email').value = email;
-                document.getElementById('password').value = password;
-            }
-        </script>
-
-        <div class="text-center mt-4">
+        <div class="text-center mt-3">
             <p class="text-muted small mb-0">
-                Belum punya akun? <a href="{{ route('register') }}" class="text-danger fw-bold text-decoration-none">Daftar Akun Baru</a>
+                Belum memiliki akun? <a href="{{ route('register') }}" class="text-danger fw-bold text-decoration-none">Daftar Akun Baru</a>
             </p>
         </div>
     </div>
