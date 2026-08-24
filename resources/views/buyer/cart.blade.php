@@ -101,8 +101,8 @@
                         <span class="fw-semibold">{{ $cart->formatted_total_price }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-3">
-                        <span class="text-muted">Ongkos Kirim / Ambil</span>
-                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">GRATIS</span>
+                        <span class="text-muted">Metode Penyajian</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">MAKAN DI TEMPAT</span>
                     </div>
 
                     <hr class="my-3">
