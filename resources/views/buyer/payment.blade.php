@@ -40,7 +40,7 @@
                             
                             <div class="d-inline-block p-3 bg-white rounded-3 shadow-sm mb-3">
                                 @if ($qrisSetting && $qrisSetting->qris_image)
-                                    <img src="{{ Str::startsWith($qrisSetting->qris_image, 'http') ? $qrisSetting->qris_image : asset('storage/' . $qrisSetting->qris_image) }}" class="img-fluid rounded" style="max-width: 250px; max-height: 250px;" alt="QRIS Kedai Marjuki'S">
+                                    <img src="{{ Str::startsWith($qrisSetting->qris_image, 'http') ? $qrisSetting->qris_image : (file_exists(public_path($qrisSetting->qris_image)) ? asset($qrisSetting->qris_image) : asset('storage/' . $qrisSetting->qris_image)) }}" class="img-fluid rounded border" style="max-width: 250px; max-height: 250px;" alt="QRIS Kedai Marjuki'S">
                                 @else
                                     <div class="py-4 px-5 text-muted">
                                         <i class="fa-solid fa-qrcode display-1 text-danger"></i>
