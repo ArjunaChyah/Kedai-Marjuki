@@ -90,6 +90,49 @@
             border-radius: 50%;
             pointer-events: none;
         }
+
+        /* ==========================================================================
+           RESPONSIVE BREAKPOINTS (SMARTPHONE, TABLET, DESKTOP)
+           Format ramah pemula untuk kemudahan belajar siswa SMK
+           ========================================================================== */
+        
+        /* Smartphone (< 576px) */
+        @media (max-width: 575.98px) {
+            .hero-banner {
+                padding: 3rem 1rem;
+                border-radius: 0 0 1.5rem 1.5rem;
+                text-align: center;
+            }
+            .menu-aesthetic-section {
+                padding: 2rem 1rem;
+                border-radius: 1.25rem;
+            }
+            .navbar-brand {
+                font-size: 1.25rem !important;
+            }
+            .card-body {
+                padding: 1.25rem;
+            }
+        }
+
+        /* Tablet (576px - 991.98px) */
+        @media (min-width: 576px) and (max-width: 991.98px) {
+            .hero-banner {
+                padding: 4rem 2rem;
+                border-radius: 0 0 2rem 2rem;
+            }
+            .menu-aesthetic-section {
+                padding: 2.5rem 1.75rem;
+                border-radius: 1.5rem;
+            }
+        }
+
+        /* Desktop (>= 992px) */
+        @media (min-width: 992px) {
+            .hero-banner {
+                padding: 5.5rem 0;
+            }
+        }
     </style>
     @stack('styles')
 </head>
