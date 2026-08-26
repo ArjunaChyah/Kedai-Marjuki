@@ -5,9 +5,9 @@
 @section('content')
 <div class="container py-4">
     <h2 class="fw-bold text-dark mb-1">
-        <i class="fa-solid fa-utensils text-danger me-2"></i> Checkout Pesanan (Makan di Tempat)
+        <i class="fa-solid fa-utensils text-danger me-2"></i> Konfirmasi Pesanan Kedai
     </h2>
-    <p class="text-muted mb-4">Konfirmasi nama, nomor meja / tempat duduk, dan metode pembayaran Anda</p>
+    <p class="text-muted mb-4">Lengkapi data pemesanan dan pilih metode pembayaran</p>
 
     <x-alert />
 
@@ -18,7 +18,7 @@
             <!-- Customer Data Form -->
             <div class="col-lg-7">
                 <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
-                    <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user text-danger me-2"></i> Data Pelanggan Kedai</h5>
+                    <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user text-danger me-2"></i> Data Pelanggan</h5>
 
                     <div class="mb-3">
                         <label for="name" class="form-label font-weight-bold text-dark small">Nama Pemesan</label>
@@ -30,15 +30,34 @@
                         <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $user->phone) }}" required placeholder="081234567890">
                     </div>
 
+                    <!-- Tipe Penyajian (Sederhana: Makan di Tempat / Bungkus) -->
                     <div class="mb-3">
-                        <label for="address" class="form-label font-weight-bold text-dark small">Nomor Meja / Lokasi Tempat Duduk</label>
-                        <input type="text" name="address" id="address" class="form-control" value="{{ old('address', 'Makan di Tempat - Meja 1') }}" required placeholder="Contoh: Meja 1, Meja 2, atau Bungkus (Bawa Pulang)">
-                        <small class="text-muted"><i class="fa-solid fa-shop text-success me-1"></i> Pesanan disajikan langsung di meja tempat duduk Anda di Kedai Marjuki'S.</small>
+                        <label class="form-label font-weight-bold text-dark small mb-2">Pilihan Penyajian</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <label class="card h-100 border p-3 cursor-pointer rounded-3 bg-light hover-lift d-flex flex-row align-items-center gap-2 m-0">
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="address" id="type_dine_in" value="Makan di Tempat" {{ old('address', 'Makan di Tempat') == 'Makan di Tempat' ? 'checked' : '' }} required>
+                                    <div>
+                                        <div class="fw-bold text-dark small"><i class="fa-solid fa-utensils text-danger me-1"></i> Makan di Tempat</div>
+                                        <small class="text-muted text-xs">Makan santai di kedai</small>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <label class="card h-100 border p-3 cursor-pointer rounded-3 bg-light hover-lift d-flex flex-row align-items-center gap-2 m-0">
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="address" id="type_takeaway" value="Bungkus (Bawa Pulang)" {{ old('address') == 'Bungkus (Bawa Pulang)' ? 'checked' : '' }}>
+                                    <div>
+                                        <div class="fw-bold text-dark small"><i class="fa-solid fa-bag-shopping text-warning me-1"></i> Bungkus</div>
+                                        <small class="text-muted text-xs">Bawa pulang / take away</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-0">
-                        <label for="notes" class="form-label font-weight-bold text-dark small">Catatan Pesanan (Opsional)</label>
-                        <textarea name="notes" id="notes" class="form-control" rows="2" placeholder="Contoh: Sambal dipisah, Indomie setengah matang, es teh manis banget, dll.">{{ old('notes') }}</textarea>
+                        <label for="notes" class="form-label font-weight-bold text-dark small">Catatan Tambahan (Opsional)</label>
+                        <textarea name="notes" id="notes" class="form-control" rows="2" placeholder="Contoh: Sambal dipisah, Indomie agak setengah matang, es teh manis banget, dll.">{{ old('notes') }}</textarea>
                     </div>
                 </div>
 
@@ -99,11 +118,11 @@
                     </div>
 
                     <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill font-weight-bold shadow-sm py-3">
-                        <i class="fa-solid fa-paper-plane me-2"></i> Pesan Makanan Sekarang
+                        <i class="fa-solid fa-paper-plane me-2"></i> Pesan Sekarang
                     </button>
 
                     <small class="text-muted text-center d-block mt-3 fs-7">
-                        <i class="fa-solid fa-store text-success me-1"></i> Pesanan Anda disajikan segar dan hangat oleh Kedai Marjuki'S.
+                        <i class="fa-solid fa-store text-success me-1"></i> Hidangan disajikan segar dan hangat khas Kedai Marjuki'S.
                     </small>
                 </div>
             </div>
