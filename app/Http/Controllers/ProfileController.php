@@ -24,7 +24,7 @@ class ProfileController extends Controller
             'phone' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string'],
             'old_password' => ['nullable', 'required_with:password'],
-            'password' => ['nullable', 'min:8', 'confirmed'],
+            'password' => ['nullable', 'confirmed'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'email.required' => 'Email wajib diisi.',
@@ -33,7 +33,6 @@ class ProfileController extends Controller
             'phone.required' => 'Nomor WhatsApp wajib diisi.',
             'address.required' => 'Alamat rumah wajib diisi.',
             'old_password.required_with' => 'Password lama wajib diisi untuk mengubah password.',
-            'password.min' => 'Password baru minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi password baru tidak cocok.',
         ]);
 
