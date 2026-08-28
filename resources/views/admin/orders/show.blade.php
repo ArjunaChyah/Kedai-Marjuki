@@ -92,17 +92,24 @@
                     <label for="order_status" class="form-label font-weight-bold text-dark small">Status Alur Pesanan</label>
                     <select name="order_status" id="order_status" class="form-select fw-semibold" required>
                         <option value="pending" {{ $order->order_status === 'pending' ? 'selected' : '' }}>Pending (Menunggu)</option>
-                        <option value="confirmed" {{ $order->order_status === 'confirmed' ? 'selected' : '' }}>Confirmed (Dikonfirmasi Admin)</option>
+                        <option value="confirmed" {{ $order->order_status === 'confirmed' ? 'selected' : '' }}>Confirmed (Dikonfirmasi)</option>
                         <option value="processing" {{ $order->order_status === 'processing' ? 'selected' : '' }}>Processing (Sedang Dimasak)</option>
-                        <option value="ready" {{ $order->order_status === 'ready' ? 'selected' : '' }}>Ready (Siap Diambil/Dikirim)</option>
+                        <option value="ready" {{ $order->order_status === 'ready' ? 'selected' : '' }}>Ready (Siap Disajikan)</option>
                         <option value="completed" {{ $order->order_status === 'completed' ? 'selected' : '' }}>Completed (Pesanan Selesai)</option>
                         <option value="cancelled" {{ $order->order_status === 'cancelled' ? 'selected' : '' }}>Cancelled (Dibatalkan)</option>
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-danger w-100 rounded-pill font-weight-bold">
-                    <i class="fa-solid fa-arrows-rotate me-1"></i> Update Status Pesanan
-                </button>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger rounded-pill font-weight-bold">
+                        <i class="fa-solid fa-arrows-rotate me-1"></i> Update Status Pesanan
+                    </button>
+                    @if ($order->order_status !== 'completed')
+                        <button type="button" onclick="document.getElementById('order_status').value='completed'; this.form.submit();" class="btn btn-outline-success rounded-pill font-weight-bold btn-sm">
+                            <i class="fa-solid fa-circle-check me-1"></i> 1-Klik Pesanan Selesai
+                        </button>
+                    @endif
+                </div>
             </form>
         </div>
 

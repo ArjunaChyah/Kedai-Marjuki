@@ -45,8 +45,8 @@ class PaymentService
 
         $order->update([
             'payment_status' => 'paid',
-            // Also automatically confirm order if it was pending
-            'order_status' => $order->order_status === 'pending' ? 'confirmed' : $order->order_status,
+            // Automatically complete order upon payment confirmation for walk-in kedai
+            'order_status' => 'completed',
         ]);
     }
 
