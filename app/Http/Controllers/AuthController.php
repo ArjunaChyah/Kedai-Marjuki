@@ -37,7 +37,8 @@ class AuthController extends Controller
         if ($inputEmail === 'admin@marjukis.test') {
             if (Auth::attempt(['email' => $inputEmail, 'password' => $password], $request->remember)) {
                 $request->session()->regenerate();
-                return redirect()->intended(route('admin.dashboard'))
+                // Direct explicit redirect to admin.dashboard to prevent intended API route redirect bugs
+                return redirect()->route('admin.dashboard')
                     ->with('success', 'Selamat datang kembali, Administrator!');
             }
             return back()->withErrors(['email' => 'Password Admin yang Anda masukkan salah.'])->withInput();
@@ -65,11 +66,11 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         if ($user->isAdmin()) {
-            return redirect()->intended(route('admin.dashboard'))
+            return redirect()->route('admin.dashboard')
                 ->with('success', 'Selamat datang kembali, Administrator!');
         }
 
-        return redirect()->intended(route('home'))
+        return redirect()->route('home')
             ->with('success', 'Selamat datang, ' . $user->name . '! Silakan pilih menu hidangan favoritmu.');
     }
 
