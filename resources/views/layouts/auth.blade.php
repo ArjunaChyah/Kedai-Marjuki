@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap 5.3 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5.3 CSS (Offline & Online) -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- FontAwesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -24,7 +24,7 @@
         .auth-card {
             border: none;
             border-radius: 1.25rem;
-            box-shadow: 0 20px 40px -15px rgba(220, 38, 38, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
         .btn-danger {
             background-color: #dc2626;
@@ -36,7 +36,7 @@
         }
     </style>
 </head>
-<body class="d-flex align-items-center py-5">
+<body class="d-flex align-items-center justify-content-center py-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
