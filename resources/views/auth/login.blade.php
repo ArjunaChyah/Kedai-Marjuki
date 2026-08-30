@@ -25,7 +25,7 @@
                 <label for="password" class="form-label font-weight-bold text-dark small">Password</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
-                    <input type="password" name="password" id="password" class="form-control border-start-0 ps-0" placeholder="••••••••" required>
+                    <input type="password" name="password" id="password" class="form-control border-start-0 ps-0" placeholder="...." required>
                 </div>
             </div>
 
