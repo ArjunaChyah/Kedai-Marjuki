@@ -7,7 +7,7 @@
                     <i class="fa-solid fa-utensils me-2"></i> KEDAI MARJUKI'S
                 </h5>
                 <p class="text-light-50 small mb-3">
-                    Kedai yang menyediakan makanan dan minuman lezat, berkualitas, dan ramah di kantong. Kami menyajikan berbagai macam makanan dan minuman segar untuk menemani aktivitas harian Anda.
+                    Kedai yang menyediakan makanan dan minuman lezat dan menyegarkan, berkualitas, dan ramah di kantong. Kami menyajikan berbagai macam makanan dan minuman segar untuk menemani aktivitas harian Anda.
                 </p>
                 <div class="d-flex align-items-center gap-2">
                     <a href="https://wa.me/62882005116301?text=Halo%20Kedai%20Marjuki'S,%20saya%20ingin%20bertanya..." target="_blank" class="btn btn-success btn-sm rounded-pill px-3 fw-bold">

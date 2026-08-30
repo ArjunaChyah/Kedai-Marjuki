@@ -32,7 +32,7 @@
                 <div class="p-3 bg-white bg-opacity-10 rounded-4 backdrop-blur shadow-lg border border-white border-opacity-25">
                     <img src="{{ asset('foto_website/warung.jpg') }}" alt="Kedai Marjuki'S Real Photo" class="img-fluid rounded-3 mb-3 shadow object-fit-cover w-100" style="max-height: 250px;">
                     <h5 class="fw-bold text-white mb-1">Kedai Marjuki'S </h5>
-                    <p class="text-warning fw-semibold mb-0"><i class="fa-solid fa-location-dot me-1"></i> Jl.Jomblang Perbalan No800 </p>
+                    <p class="text-warning fw-semibold mb-0"><i class="fa-solid fa-location-dot me-1"></i> Jl.Jomblang Perbalan No.800 </p>
                 </div>
             </div>
         </div>
