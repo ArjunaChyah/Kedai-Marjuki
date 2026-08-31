@@ -158,10 +158,11 @@ class DatabaseSeeder extends Seeder
         }
 
         // 4. Seed QRIS Setting
-        QrisSetting::firstOrCreate(
-            ['description' => 'QRIS Kedai Marjuki\'S (Semua e-Wallet & Bank)'],
+        QrisSetting::updateOrCreate(
+            ['id' => 1],
             [
-                'qris_image' => 'qris/qris-sample.svg',
+                'description' => 'QRIS Resmi LAPAK MARJUKI (Semua e-Wallet & Bank)',
+                'qris_image' => 'foto_website/qr_kedai_marjukis.png',
                 'is_active' => true,
             ]
         );
