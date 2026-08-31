@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,6 @@ class AuthController extends Controller
         if ($inputEmail === 'admin@marjukis.test') {
             if (Auth::attempt(['email' => $inputEmail, 'password' => $password], $request->remember)) {
                 $request->session()->regenerate();
-                // Direct explicit redirect to admin.dashboard to prevent intended API route redirect bugs
                 return redirect()->route('admin.dashboard')
                     ->with('success', 'Selamat datang kembali, Administrator!');
             }

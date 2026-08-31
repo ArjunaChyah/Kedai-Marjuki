@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Buyer;
 
+use App\Http\Controllers\Controller;
 use App\Services\CartService;
 use App\Services\OrderService;
 use Exception;
@@ -42,7 +43,7 @@ class CheckoutController extends Controller
         ], [
             'name.required' => 'Nama penerima wajib diisi.',
             'phone.required' => 'Nomor WhatsApp wajib diisi.',
-            'address.required' => 'Alamat pengiriman/pengambilan wajib diisi.',
+            'address.required' => 'Pilihan penyajian wajib diisi.',
             'payment_method.required' => 'Metode pembayaran wajib dipilih.',
             'payment_method.in' => 'Metode pembayaran harus QRIS atau Tunai.',
         ]);
