@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 6000,
                 'stock' => 50,
                 'status' => 'available',
-                'image' => null,
+                'image' => 'produk/indomie-biasa.jpg',
             ],
             [
                 'name' => 'Indomie Telor',
@@ -136,7 +136,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 3000,
                 'stock' => 100,
                 'status' => 'available',
-                'image' => 'produk/es-teh.jpg',
+                'image' => 'produk/minuman-teh.jpg',
             ],
             [
                 'name' => 'Es Jeruk',
@@ -146,7 +146,7 @@ class DatabaseSeeder extends Seeder
                 'price' => 5000,
                 'stock' => 80,
                 'status' => 'available',
-                'image' => 'produk/es-jeruk.jpg',
+                'image' => 'produk/minuman-jeruk.jpg',
             ],
         ];
 

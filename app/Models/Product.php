@@ -76,6 +76,7 @@ class Product extends Model
             str_replace('telur', 'telor', $cleanName),
             explode('-', $slug)[0], // e.g. 'indomie' from 'indomie-telor'
             explode('-', $slug)[1] ?? '',
+            'minuman-' . (explode('-', $slug)[1] ?? explode('-', $slug)[0]), // e.g. 'minuman-teh', 'minuman-jeruk'
         ];
 
         $extensions = ['jpg', 'jpeg', 'png', 'webp'];
