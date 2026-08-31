@@ -129,7 +129,7 @@ class DatabaseSeeder extends Seeder
                 'image' => 'produk/bakwan-jagung.jpg',
             ],
             [
-                'name' => 'Es Teh',
+                'name' => 'Minuman Teh',
                 'slug' => 'es-teh',
                 'category_id' => $catMinuman->id,
                 'description' => 'Es teh manis segar diseduh dari teh racikan sendiri dengan bau harum dan rasa manis yang pas.',
@@ -139,13 +139,13 @@ class DatabaseSeeder extends Seeder
                 'image' => 'produk/minuman-teh.jpg',
             ],
             [
-                'name' => 'Es Jeruk',
+                'name' => 'Minuman Jeruk',
                 'slug' => 'es-jeruk',
                 'category_id' => $catMinuman->id,
                 'description' => 'Es jeruk peras asli segar dan kaya vitamin C, cocok menemani santapan makanan.',
                 'price' => 5000,
                 'stock' => 80,
-                'status' => 'available',
+                'status' => 'available',    
                 'image' => 'produk/minuman-jeruk.jpg',
             ],
         ];
