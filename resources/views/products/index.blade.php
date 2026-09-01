@@ -52,12 +52,10 @@
             <!-- Sorting Select Dropdown -->
             <div class="d-flex align-items-center gap-2">
                 <span class="fw-bold text-white small text-nowrap"><i class="fa-solid fa-arrow-down-short-wide text-warning me-1"></i> Urutkan:</span>
-                <select class="form-select form-select-sm rounded-pill border-0 shadow-sm font-weight-bold bg-white text-dark" style="min-width: 180px;" onchange="window.location.href=this.value">
-                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'latest'])) }}" {{ !request('sort') || request('sort') == 'latest' ? 'selected' : '' }}>🌟 Menu Terbaru</option>
-                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'price_asc'])) }}" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>💵 Harga Termurah</option>
-                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'price_desc'])) }}" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>💎 Harga Termahal</option>
-                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'name_asc'])) }}" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>🔤 Nama (A - Z)</option>
-                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'name_desc'])) }}" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>🔤 Nama (Z - A)</option>
+                <select class="form-select form-select-sm rounded-pill border-0 shadow-sm font-weight-bold bg-white text-dark" style="min-width: 160px;" onchange="window.location.href=this.value">
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'latest'])) }}" {{ !request('sort') || request('sort') == 'latest' ? 'selected' : '' }}>Menu Terbaru</option>
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'price_asc'])) }}" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Harga Termurah</option>
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'price_desc'])) }}" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Harga Termahal</option>
                 </select>
             </div>
         </div>
