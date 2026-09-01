@@ -21,7 +21,10 @@ class OrderController extends Controller
     {
         $user = auth()->user();
         
-        $orderQuery = Order::where('user_id', $user->id);
+        $orderQuery = Order::where(function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                  ->orWhere('customer_name', $user->name);
+        });
 
         $totalOrders = (clone $orderQuery)->count();
         $pendingOrders = (clone $orderQuery)
@@ -51,7 +54,11 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::where('user_id', auth()->id())
+        $user = auth()->user();
+        $orders = Order::where(function ($query) use ($user) {
+                $query->where('user_id', $user->id)
+                      ->orWhere('customer_name', $user->name);
+            })
             ->latest()
             ->paginate(10);
 
@@ -60,7 +67,10 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+        $user = auth()->user();
+        $isOwner = ($order->user_id === $user->id) || ($order->customer_name === $user->name);
+
+        if (!$isOwner && !$user->isAdmin()) {
             abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
         }
 
