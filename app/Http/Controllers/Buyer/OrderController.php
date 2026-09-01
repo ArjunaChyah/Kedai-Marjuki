@@ -21,15 +21,7 @@ class OrderController extends Controller
     {
         $user = auth()->user();
         
-        $orderQuery = Order::where(function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-            if (!empty($user->phone)) {
-                $query->orWhere('customer_phone', $user->phone);
-            }
-            if (!empty($user->name) && $user->name !== 'Pelanggan Kedai') {
-                $query->orWhere('customer_name', $user->name);
-            }
-        });
+        $orderQuery = Order::where('user_id', $user->id);
 
         $totalOrders = (clone $orderQuery)->count();
         $pendingOrders = (clone $orderQuery)
@@ -59,17 +51,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $user = auth()->user();
-
-        $orders = Order::where(function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-                if (!empty($user->phone)) {
-                    $query->orWhere('customer_phone', $user->phone);
-                }
-                if (!empty($user->name) && $user->name !== 'Pelanggan Kedai') {
-                    $query->orWhere('customer_name', $user->name);
-                }
-            })
+        $orders = Order::where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
 
@@ -78,12 +60,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $user = auth()->user();
-        $isOwner = ($order->user_id === $user->id) || 
-                   (!empty($user->phone) && $order->customer_phone === $user->phone) ||
-                   (!empty($user->name) && $order->customer_name === $user->name);
-
-        if (!$isOwner && !$user->isAdmin()) {
+        if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
             abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
         }
 
