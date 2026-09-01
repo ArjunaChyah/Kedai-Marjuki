@@ -44,34 +44,48 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Password Admin yang Anda masukkan salah.'])->withInput();
         }
 
-        // 2. Flexible Buyer Authentication (Auto Login / Auto Register for Buyer)
-        $user = User::where('email', $inputEmail)->first();
+        // 2. Flexible Buyer Authentication (Email / Username / Phone / Name)
+        $formattedEmail = str_contains($inputEmail, '@') ? $inputEmail : $inputEmail . '@gmail.com';
+        
+        $user = User::where('email', $inputEmail)
+            ->orWhere('email', $formattedEmail)
+            ->orWhere('phone', $inputEmail)
+            ->orWhere('name', $inputEmail)
+            ->first();
 
         if (!$user) {
-            // Auto-create buyer account on the fly for seamless demo
+            // Auto-create buyer account safely on the fly for seamless demo
             $name = explode('@', $inputEmail)[0];
             $name = ucwords(str_replace(['.', '_', '-'], ' ', $name));
 
-            $user = User::create([
-                'name' => $name ?: 'Pelanggan Kedai',
-                'email' => str_contains($inputEmail, '@') ? $inputEmail : $inputEmail . '@gmail.com',
-                'password' => Hash::make($password),
-                'role' => 'buyer',
-                'phone' => '0882005116301',
-                'address' => 'JL. Jomblang Perbalan No 800 Candi, Semarang',
-            ]);
+            try {
+                $user = User::create([
+                    'name' => $name ?: 'Pelanggan Kedai',
+                    'email' => $formattedEmail,
+                    'password' => Hash::make($password),
+                    'role' => 'buyer',
+                    'phone' => '0882005116301',
+                    'address' => 'JL. Jomblang Perbalan No 800 Candi, Semarang',
+                ]);
+            } catch (\Throwable $e) {
+                $user = User::where('email', $formattedEmail)->first();
+            }
         }
 
-        Auth::login($user, $request->remember);
-        $request->session()->regenerate();
+        if ($user) {
+            Auth::login($user, $request->remember);
+            $request->session()->regenerate();
 
-        if ($user->isAdmin()) {
-            return redirect()->route('admin.dashboard')
-                ->with('success', 'Selamat datang kembali, Administrator!');
+            if ($user->isAdmin()) {
+                return redirect()->route('admin.dashboard')
+                    ->with('success', 'Selamat datang kembali, Administrator!');
+            }
+
+            return redirect()->route('home')
+                ->with('success', 'Selamat datang, ' . $user->name . '! Silakan pilih menu hidangan favoritmu.');
         }
 
-        return redirect()->route('home')
-            ->with('success', 'Selamat datang, ' . $user->name . '! Silakan pilih menu hidangan favoritmu.');
+        return back()->withErrors(['email' => 'Gagal masuk akun. Silakan coba lagi.'])->withInput();
     }
 
     public function showRegisterForm()
@@ -99,23 +113,33 @@ class AuthController extends Controller
         $cleanPhone = preg_replace('/[^0-9]/', '', $validated['phone']);
         $email = $cleanPhone ? $cleanPhone . '@marjukis.test' : Str::slug($validated['name']) . '@gmail.com';
 
-        $user = User::where('email', $email)->orWhere('phone', $validated['phone'])->first();
+        $user = User::where('email', $email)
+            ->orWhere('phone', $validated['phone'])
+            ->orWhere('name', $validated['name'])
+            ->first();
 
         if (!$user) {
-            $user = User::create([
-                'name' => $validated['name'],
-                'email' => $email,
-                'phone' => $validated['phone'],
-                'address' => 'Diambil / Makan di Tempat Kedai Marjuki\'S',
-                'password' => Hash::make($validated['password']),
-                'role' => 'buyer',
-            ]);
+            try {
+                $user = User::create([
+                    'name' => $validated['name'],
+                    'email' => $email,
+                    'phone' => $validated['phone'],
+                    'address' => 'Diambil / Makan di Tempat Kedai Marjuki\'S',
+                    'password' => Hash::make($validated['password']),
+                    'role' => 'buyer',
+                ]);
+            } catch (\Throwable $e) {
+                $user = User::where('email', $email)->orWhere('phone', $validated['phone'])->first();
+            }
         }
 
-        Auth::login($user);
+        if ($user) {
+            Auth::login($user);
+            return redirect()->route('home')
+                ->with('success', 'Pendaftaran akun berhasil! Selamat datang di Kedai Marjuki\'S.');
+        }
 
-        return redirect()->route('home')
-            ->with('success', 'Pendaftaran akun berhasil! Selamat datang di Kedai Marjuki\'S.');
+        return back()->withErrors(['name' => 'Pendaftaran gagal. Silakan coba lagi.']);
     }
 
     public function logout(Request $request)
