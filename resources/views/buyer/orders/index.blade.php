@@ -77,4 +77,24 @@
         </div>
     @endif
 </div>
+
+@push('scripts')
+<script>
+    // Auto-sync order history table every 4 seconds
+    setInterval(function() {
+        fetch(window.location.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newTable = doc.querySelector('.table-responsive');
+                const currTable = document.querySelector('.table-responsive');
+                if (newTable && currTable && newTable.innerHTML.trim() !== currTable.innerHTML.trim()) {
+                    currTable.innerHTML = newTable.innerHTML;
+                }
+            })
+            .catch(err => console.debug('Syncing orders...', err));
+    }, 4000);
+</script>
+@endpush
 @endsection

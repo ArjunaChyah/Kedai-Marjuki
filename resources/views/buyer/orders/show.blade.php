@@ -132,4 +132,27 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    // If order is not completed yet, live poll status every 4 seconds
+    const isCompleted = "{{ $order->order_status }}" === 'completed' && "{{ $order->payment_status }}" === 'paid';
+    if (!isCompleted) {
+        setInterval(function() {
+            fetch(window.location.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newStatus = doc.querySelector('.col-lg-4');
+                    const currStatus = document.querySelector('.col-lg-4');
+                    if (newStatus && currStatus && newStatus.innerHTML.trim() !== currStatus.innerHTML.trim()) {
+                        currStatus.innerHTML = newStatus.innerHTML;
+                    }
+                })
+                .catch(err => console.debug('Syncing order...', err));
+        }, 4000);
+    }
+</script>
+@endpush
 @endsection

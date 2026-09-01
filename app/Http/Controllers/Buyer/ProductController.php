@@ -26,7 +26,30 @@ class ProductController extends Controller
             $query->where('name', 'LIKE', "%{$search}%");
         }
 
-        $products = $query->latest()->paginate(12)->withQueryString();
+        // Sorting feature
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                default:
+                    $query->latest();
+                    break;
+            }
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->paginate(12)->withQueryString();
 
         return view('products.index', compact('products', 'categories'));
     }

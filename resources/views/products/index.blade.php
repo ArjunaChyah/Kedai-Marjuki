@@ -34,17 +34,32 @@
 
     <!-- Aesthetic Product Menu Container -->
     <div class="menu-aesthetic-section p-4 p-md-5 mb-4">
-        <!-- Category Pills Filter -->
-        <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
-            <span class="fw-bold text-white me-2 small"><i class="fa-solid fa-filter text-warning me-1"></i> Filter Kategori:</span>
-            <a href="{{ route('products.index', request()->only('search')) }}" class="btn {{ !request('category') ? 'btn-warning text-dark font-weight-bold' : 'btn-outline-light' }} btn-sm rounded-pill px-3">
-                Semua Menu
-            </a>
-            @foreach ($categories as $cat)
-                <a href="{{ route('products.index', array_merge(request()->only('search'), ['category' => $cat->slug])) }}" class="btn {{ request('category') == $cat->slug ? 'btn-warning text-dark font-weight-bold' : 'btn-outline-light' }} btn-sm rounded-pill px-3">
-                    {{ $cat->name }}
+        <!-- Filter Kategori & Sorting Bar -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <!-- Category Pills Filter -->
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <span class="fw-bold text-white me-2 small"><i class="fa-solid fa-filter text-warning me-1"></i> Kategori:</span>
+                <a href="{{ route('products.index', request()->only('search', 'sort')) }}" class="btn {{ !request('category') ? 'btn-warning text-dark font-weight-bold' : 'btn-outline-light' }} btn-sm rounded-pill px-3">
+                    Semua Menu
                 </a>
-            @endforeach
+                @foreach ($categories as $cat)
+                    <a href="{{ route('products.index', array_merge(request()->only('search', 'sort'), ['category' => $cat->slug])) }}" class="btn {{ request('category') == $cat->slug ? 'btn-warning text-dark font-weight-bold' : 'btn-outline-light' }} btn-sm rounded-pill px-3">
+                        {{ $cat->name }}
+                    </a>
+                @endforeach
+            </div>
+
+            <!-- Sorting Select Dropdown -->
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-bold text-white small text-nowrap"><i class="fa-solid fa-arrow-down-short-wide text-warning me-1"></i> Urutkan:</span>
+                <select class="form-select form-select-sm rounded-pill border-0 shadow-sm font-weight-bold bg-white text-dark" style="min-width: 180px;" onchange="window.location.href=this.value">
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'latest'])) }}" {{ !request('sort') || request('sort') == 'latest' ? 'selected' : '' }}>🌟 Menu Terbaru</option>
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'price_asc'])) }}" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>💵 Harga Termurah</option>
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'price_desc'])) }}" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>💎 Harga Termahal</option>
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'name_asc'])) }}" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>🔤 Nama (A - Z)</option>
+                    <option value="{{ route('products.index', array_merge(request()->only('search', 'category'), ['sort' => 'name_desc'])) }}" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>🔤 Nama (Z - A)</option>
+                </select>
+            </div>
         </div>
 
         @if ($products->isEmpty())

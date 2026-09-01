@@ -21,18 +21,28 @@ class OrderController extends Controller
     {
         $user = auth()->user();
         
-        $totalOrders = Order::where('user_id', $user->id)->count();
-        $pendingOrders = Order::where('user_id', $user->id)
+        $orderQuery = Order::where(function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+            if (!empty($user->phone)) {
+                $query->orWhere('customer_phone', $user->phone);
+            }
+            if (!empty($user->name) && $user->name !== 'Pelanggan Kedai') {
+                $query->orWhere('customer_name', $user->name);
+            }
+        });
+
+        $totalOrders = (clone $orderQuery)->count();
+        $pendingOrders = (clone $orderQuery)
             ->whereIn('order_status', ['pending', 'confirmed', 'processing', 'ready'])
             ->count();
-        $completedOrders = Order::where('user_id', $user->id)
+        $completedOrders = (clone $orderQuery)
             ->where('order_status', 'completed')
             ->count();
-        $totalSpent = Order::where('user_id', $user->id)
+        $totalSpent = (clone $orderQuery)
             ->where('payment_status', 'paid')
             ->sum('total_price');
 
-        $recentOrders = Order::where('user_id', $user->id)
+        $recentOrders = (clone $orderQuery)
             ->latest()
             ->take(5)
             ->get();
@@ -49,7 +59,17 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::where('user_id', auth()->id())
+        $user = auth()->user();
+
+        $orders = Order::where(function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+                if (!empty($user->phone)) {
+                    $query->orWhere('customer_phone', $user->phone);
+                }
+                if (!empty($user->name) && $user->name !== 'Pelanggan Kedai') {
+                    $query->orWhere('customer_name', $user->name);
+                }
+            })
             ->latest()
             ->paginate(10);
 
@@ -58,7 +78,12 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+        $user = auth()->user();
+        $isOwner = ($order->user_id === $user->id) || 
+                   (!empty($user->phone) && $order->customer_phone === $user->phone) ||
+                   (!empty($user->name) && $order->customer_name === $user->name);
+
+        if (!$isOwner && !$user->isAdmin()) {
             abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
         }
 

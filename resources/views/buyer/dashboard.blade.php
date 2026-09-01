@@ -177,4 +177,35 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    // Auto-sync polling every 5 seconds so Edge buyer window updates instantly when Chrome admin confirms
+    setInterval(function() {
+        fetch(window.location.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Update stats
+                const newStats = doc.querySelectorAll('.card h4, .card h5');
+                const currStats = document.querySelectorAll('.card h4, .card h5');
+                newStats.forEach((el, i) => {
+                    if (currStats[i] && currStats[i].innerText !== el.innerText) {
+                        currStats[i].innerText = el.innerText;
+                    }
+                });
+
+                // Update recent orders table
+                const newTable = doc.querySelector('.card-body');
+                const currTable = document.querySelector('.card-body');
+                if (newTable && currTable && newTable.innerHTML.trim() !== currTable.innerHTML.trim()) {
+                    currTable.innerHTML = newTable.innerHTML;
+                }
+            })
+            .catch(err => console.debug('Syncing...', err));
+    }, 4000);
+</script>
+@endpush
 @endsection
