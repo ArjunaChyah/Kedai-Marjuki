@@ -79,6 +79,20 @@ class OrderController extends Controller
         return view('buyer.orders.show', compact('order'));
     }
 
+    public function receipt(Order $order)
+    {
+        $user = auth()->user();
+        $isOwner = ($order->user_id === $user->id) || ($order->customer_name === $user->name);
+
+        if (!$isOwner && !$user->isAdmin()) {
+            abort(403, 'Anda tidak memiliki akses ke struk pesanan ini.');
+        }
+
+        $order->load('items.product');
+
+        return view('orders.receipt', compact('order'));
+    }
+
     public function payment(Order $order)
     {
         if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {

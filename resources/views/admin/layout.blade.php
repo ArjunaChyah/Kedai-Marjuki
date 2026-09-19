@@ -123,6 +123,9 @@
                 <span><i class="fa-solid fa-money-check-dollar me-2"></i> Verifikasi Pembayaran</span>
                 <span id="badge-payments" class="badge bg-warning text-dark rounded-pill px-2" style="font-size: 0.75rem;">-</span>
             </a>
+            <a class="nav-link {{ request()->routeIs('admin.tables.qr') ? 'active' : '' }}" href="{{ route('admin.tables.qr') }}">
+                <i class="fa-solid fa-table"></i> QR Meja Pelanggan
+            </a>
             <a class="nav-link {{ request()->routeIs('admin.qris.*') ? 'active' : '' }}" href="{{ route('admin.qris.index') }}">
                 <i class="fa-solid fa-qrcode"></i> Pengaturan QRIS
             </a>
@@ -165,7 +168,7 @@
                         <span class="pulse-live"></span> Real-Time Sync Aktif
                     </span>
                     <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill font-weight-bold">
-                        <i class="fa-solid fa-user-shield me-1"></i> Admin: {{ auth()->user()->name }}
+                        <i class="fa-solid fa-user-shield me-1"></i> Admin: {{ auth()->user()->name ?? 'Administrator' }}
                     </span>
                 </div>
             </div>
@@ -197,6 +200,7 @@
             <a class="nav-link text-white py-2" href="{{ route('admin.categories.index') }}"><i class="fa-solid fa-layer-group me-2"></i> Kelola Kategori</a>
             <a class="nav-link text-white py-2" href="{{ route('admin.orders.index') }}"><i class="fa-solid fa-receipt me-2"></i> Kelola Pesanan</a>
             <a class="nav-link text-white py-2" href="{{ route('admin.payments.index') }}"><i class="fa-solid fa-money-check-dollar me-2"></i> Verifikasi Pembayaran</a>
+            <a class="nav-link text-white py-2" href="{{ route('admin.tables.qr') }}"><i class="fa-solid fa-table me-2"></i> QR Meja Pelanggan</a>
             <a class="nav-link text-white py-2" href="{{ route('admin.qris.index') }}"><i class="fa-solid fa-qrcode me-2"></i> Pengaturan QRIS</a>
             <a class="nav-link text-white py-2" href="{{ route('admin.users.index') }}"><i class="fa-solid fa-users me-2"></i> Daftar Pelanggan</a>
             <a class="nav-link text-white py-2" href="{{ route('admin.reports.index') }}"><i class="fa-solid fa-chart-line me-2"></i> Laporan Penjualan</a>

@@ -62,4 +62,21 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function tablesQr()
+    {
+        $tables = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $tableNum = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $url = url('/?meja=' . $i);
+            $tables[] = [
+                'number' => $i,
+                'name' => 'MEJA ' . $tableNum,
+                'url' => $url,
+                'qr_url' => 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=' . urlencode($url),
+            ];
+        }
+
+        return view('admin.tables.qr', compact('tables'));
+    }
 }

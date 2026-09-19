@@ -4,9 +4,13 @@
 @section('page_title', 'Detail & Update Status Pesanan')
 
 @section('content')
-<div class="mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <a href="{{ route('admin.orders.index') }}" class="text-decoration-none text-danger fw-bold small">
         <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Daftar Pesanan
+    </a>
+
+    <a href="{{ route('orders.receipt', $order->id) }}" target="_blank" class="btn btn-dark btn-sm rounded-pill fw-bold shadow-sm px-3">
+        <i class="fa-solid fa-print me-1"></i> Cetak Struk Kasir (58mm)
     </a>
 </div>
 

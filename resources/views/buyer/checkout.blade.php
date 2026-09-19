@@ -30,15 +30,42 @@
                         <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $user->phone) }}" required placeholder="081234567890">
                     </div>
 
-                    <!-- Tipe Penyajian (Sederhana: Makan di Tempat / Bungkus) -->
+                    @php
+                        $activeTable = $tableNumber ?? session('table_number');
+                        $dineInVal = !empty($activeTable) ? 'Makan di Tempat (Meja ' . str_pad($activeTable, 2, '0', STR_PAD_LEFT) . ')' : 'Makan di Tempat';
+                    @endphp
+
+                    @if (!empty($activeTable))
+                        <div class="alert alert-success border-0 shadow-xs rounded-3 p-3 mb-3 d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-qrcode fs-3 text-success"></i>
+                                <div>
+                                    <div class="fw-bold text-success-emphasis">Terhubung dengan Meja {{ str_pad($activeTable, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <small class="text-muted">Pesanan Anda akan disajikan langsung ke Meja {{ str_pad($activeTable, 2, '0', STR_PAD_LEFT) }}.</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success text-white px-3 py-2 rounded-pill small">
+                                <i class="fa-solid fa-circle-check me-1"></i> QR Meja Aktif
+                            </span>
+                        </div>
+                    @endif
+
+                    <!-- Tipe Penyajian (Makan di Tempat / Bungkus) -->
                     <div class="mb-3">
                         <label class="form-label font-weight-bold text-dark small mb-2">Pilihan Penyajian</label>
                         <div class="row g-2">
                             <div class="col-6">
                                 <label class="card h-100 border p-3 cursor-pointer rounded-3 bg-light hover-lift d-flex flex-row align-items-center gap-2 m-0">
-                                    <input class="form-check-input flex-shrink-0" type="radio" name="address" id="type_dine_in" value="Makan di Tempat" {{ old('address', 'Makan di Tempat') == 'Makan di Tempat' ? 'checked' : '' }} required>
+                                    <input class="form-check-input flex-shrink-0" type="radio" name="address" id="type_dine_in" value="{{ $dineInVal }}" {{ old('address', $dineInVal) == $dineInVal ? 'checked' : '' }} required>
                                     <div>
-                                        <div class="fw-bold text-dark small"><i class="fa-solid fa-utensils text-danger me-1"></i> Makan di Tempat</div>
+                                        <div class="fw-bold text-dark small">
+                                            <i class="fa-solid fa-utensils text-danger me-1"></i> 
+                                            @if (!empty($activeTable))
+                                                Makan di Tempat (Meja {{ str_pad($activeTable, 2, '0', STR_PAD_LEFT) }})
+                                            @else
+                                                Makan di Tempat
+                                            @endif
+                                        </div>
                                         <small class="text-muted text-xs">Makan santai di kedai</small>
                                     </div>
                                 </label>

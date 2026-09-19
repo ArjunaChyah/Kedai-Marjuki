@@ -22,7 +22,7 @@
     </div>
 @endif
 
-@if ($errors->any())
+@if (isset($errors) && $errors->any())
     <div class="alert alert-danger alert-dismissible fade show shadow-sm rounded-3 mb-4" role="alert">
         <div class="d-flex align-items-center mb-2">
             <i class="fa-solid fa-circle-exclamation me-2 fs-5"></i>

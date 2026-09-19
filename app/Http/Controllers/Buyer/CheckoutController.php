@@ -19,8 +19,14 @@ class CheckoutController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->filled('meja')) {
+            session(['table_number' => $request->meja]);
+        } elseif ($request->filled('table')) {
+            session(['table_number' => $request->table]);
+        }
+
         $cart = $this->cartService->getCartDetails(auth()->user());
 
         if (!$cart || $cart->items->isEmpty()) {
@@ -28,8 +34,9 @@ class CheckoutController extends Controller
         }
 
         $user = auth()->user();
+        $tableNumber = session('table_number');
 
-        return view('buyer.checkout', compact('cart', 'user'));
+        return view('buyer.checkout', compact('cart', 'user', 'tableNumber'));
     }
 
     public function process(Request $request)

@@ -11,6 +11,12 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->filled('meja')) {
+            session(['table_number' => $request->meja]);
+        } elseif ($request->filled('table')) {
+            session(['table_number' => $request->table]);
+        }
+
         $categories = Category::withCount('products')->get();
         
         $query = Product::with('category')->where('status', 'available');
