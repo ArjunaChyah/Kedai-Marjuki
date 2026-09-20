@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        $query = Product::with('category');
+        $query = Product::with(['category', 'reviews']);
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);

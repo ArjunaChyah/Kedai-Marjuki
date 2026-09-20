@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Product extends Model
@@ -37,6 +38,31 @@ class Product extends Model
             'name' => 'Menu Kedai',
             'slug' => 'menu-kedai',
         ]);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        if ($this->relationLoaded('reviews')) {
+            $count = $this->reviews->count();
+            return $count > 0 ? round((float) $this->reviews->avg('rating'), 1) : 5.0;
+        }
+
+        $avg = $this->reviews()->avg('rating');
+        return $avg ? round((float) $avg, 1) : 5.0;
+    }
+
+    public function getReviewsCountAttribute(): int
+    {
+        if ($this->relationLoaded('reviews')) {
+            return $this->reviews->count();
+        }
+
+        return $this->reviews()->count();
     }
 
     public function isAvailable(): bool

@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        $query = Product::with('category');
+        $query = Product::with(['category', 'reviews']);
 
         if ($request->filled('category')) {
             $query->whereHas('category', function ($q) use ($request) {
@@ -56,7 +56,7 @@ class ProductController extends Controller
 
     public function show(string $slug)
     {
-        $product = Product::with('category')
+        $product = Product::with(['category', 'reviews.user'])
             ->where('slug', $slug)
             ->orWhere('id', $slug)
             ->first();

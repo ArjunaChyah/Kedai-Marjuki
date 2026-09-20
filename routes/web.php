@@ -15,6 +15,7 @@ use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Buyer\ProductController;
 use App\Http\Controllers\Buyer\ProfileController;
+use App\Http\Controllers\Buyer\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,6 +66,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('/orders/{order}/receipt', [OrderController::class, 'receipt'])->name('orders.receipt');
+
+    // Reviews
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

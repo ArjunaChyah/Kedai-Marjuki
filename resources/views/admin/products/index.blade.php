@@ -48,7 +48,15 @@
                         </td>
                         <td>
                             <div class="fw-bold text-dark mb-0">{{ $product->name }}</div>
-                            <small class="text-muted font-monospace">{{ $product->slug }}</small>
+                            <div class="d-flex align-items-center gap-1 small mt-1">
+                                @if ($product->reviews_count > 0)
+                                    <span class="text-warning"><i class="fa-solid fa-star"></i></span>
+                                    <span class="fw-bold text-dark">{{ number_format($product->average_rating, 1) }}</span>
+                                    <span class="text-muted text-xs">({{ $product->reviews_count }} ulasan)</span>
+                                @else
+                                    <span class="text-muted text-xs"><i class="fa-regular fa-star text-muted"></i> Belum ada ulasan</span>
+                                @endif
+                            </div>
                         </td>
                         <td>
                             <span class="badge bg-danger-subtle text-danger rounded-pill px-2.5 py-1.5 fw-bold">

@@ -74,7 +74,7 @@ class OrderController extends Controller
             abort(403, 'Anda tidak memiliki akses ke pesanan ini.');
         }
 
-        $order->load('items.product');
+        $order->load(['items.product', 'reviews']);
 
         return view('buyer.orders.show', compact('order'));
     }

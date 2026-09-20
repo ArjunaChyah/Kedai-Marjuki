@@ -34,6 +34,11 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function getFormattedTotalPriceAttribute(): string
     {
         return 'Rp' . number_format($this->total_price, 0, ',', '.');

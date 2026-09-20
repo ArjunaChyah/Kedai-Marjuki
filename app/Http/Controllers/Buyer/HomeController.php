@@ -19,7 +19,7 @@ class HomeController extends Controller
 
         $categories = Category::withCount('products')->get();
         
-        $query = Product::with('category')->where('status', 'available');
+        $query = Product::with(['category', 'reviews'])->where('status', 'available');
 
         if ($request->filled('category')) {
             $query->whereHas('category', function ($q) use ($request) {

@@ -21,6 +21,18 @@
                 {{ $product->name }}
             </a>
         </h5>
+
+        <div class="d-flex align-items-center gap-1 mb-2">
+            @if ($product->reviews_count > 0)
+                <span class="text-warning small"><i class="fa-solid fa-star"></i></span>
+                <span class="fw-bold text-dark small">{{ number_format($product->average_rating, 1) }}</span>
+                <span class="text-muted text-xs">({{ $product->reviews_count }} ulasan)</span>
+            @else
+                <span class="badge bg-warning-subtle text-dark border border-warning-subtle rounded-pill px-2 py-0.5 text-xs">
+                    <i class="fa-solid fa-star text-warning me-1"></i> Menu Baru
+                </span>
+            @endif
+        </div>
         
         <p class="card-text text-muted small mb-3 text-line-clamp-2" style="min-height: 38px;">
             {{ Str::limit($product->description ?? 'Makanan lezat dan higienis buatan Kedai Marjuki\'S.', 70) }}

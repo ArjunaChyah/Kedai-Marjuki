@@ -189,9 +189,102 @@
                 </div>
             </div>
 
+            @if ($order->order_status === 'completed' || $order->payment_status === 'paid')
+                <!-- Customer Review & Rating Section (Verified Purchase) -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 border-top border-4 border-warning">
+                    <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <h5 class="fw-bold text-dark mb-0">
+                            <i class="fa-solid fa-star text-warning me-2"></i> Ulasan &amp; Penilaian Menu Pesanan
+                        </h5>
+                        <span class="badge bg-warning-subtle text-dark border border-warning-subtle rounded-pill px-3 py-1.5 fw-bold text-xs">
+                            <i class="fa-solid fa-shield-halved text-success me-1"></i> Verified Purchase
+                        </span>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted small mb-4">
+                            Bagikan pengalaman santap Anda! Penilaian bintang dan ulasan Anda akan langsung tampil di etalase menu Kedai Marjuki'S.
+                        </p>
+
+                        <div class="d-flex flex-column gap-3">
+                            @foreach ($order->items as $item)
+                                @php
+                                    $existingReview = $order->reviews->firstWhere('product_id', $item->product_id);
+                                @endphp
+
+                                <div class="p-3 bg-light rounded-3 border">
+                                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0">{{ $item->product_name }}</h6>
+                                            <span class="text-muted text-xs">{{ $item->quantity }} Porsi • {{ $item->formatted_subtotal }}</span>
+                                        </div>
+
+                                        @if ($existingReview)
+                                            <div class="text-end">
+                                                <div class="text-warning small mb-1">
+                                                    @for ($s = 1; $s <= 5; $s++)
+                                                        @if ($s <= $existingReview->rating)
+                                                            <i class="fa-solid fa-star"></i>
+                                                        @else
+                                                            <i class="fa-regular fa-star text-muted opacity-50"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill text-xs">
+                                                    <i class="fa-solid fa-check me-1"></i> Sudah Diulas
+                                                </span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    @if ($existingReview)
+                                        <div class="bg-white p-2.5 rounded-3 border mt-2">
+                                            <p class="text-dark small mb-1 fst-italic">
+                                                "{{ $existingReview->comment ?: 'Rating ' . $existingReview->rating . ' bintang (tanpa ulasan tertulis)' }}"
+                                            </p>
+                                            <small class="text-muted text-xs">
+                                                <i class="fa-regular fa-clock me-1"></i> Diulas pada {{ $existingReview->updated_at->translatedFormat('d M Y, H:i') }}
+                                            </small>
+                                        </div>
+                                    @elseif ($item->product_id)
+                                        <form action="{{ route('reviews.store') }}" method="POST" class="mt-3 pt-3 border-top">
+                                            @csrf
+                                            <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                            <input type="hidden" name="product_id" value="{{ $item->product_id }}">
+
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-5">
+                                                    <label class="form-label small fw-bold text-dark mb-1 d-block">Nilai Menu Ini:</label>
+                                                    <div class="btn-group w-100" role="group">
+                                                        @for ($r = 1; $r <= 5; $r++)
+                                                            <input type="radio" class="btn-check" name="rating" id="star_{{ $item->id }}_{{ $r }}" value="{{ $r }}" {{ $r === 5 ? 'checked' : '' }}>
+                                                            <label class="btn btn-outline-warning btn-sm py-1.5 fw-bold" for="star_{{ $item->id }}_{{ $r }}" title="{{ $r }} Bintang">
+                                                                {{ $r }} ★
+                                                            </label>
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <label class="form-label small fw-bold text-dark mb-1 d-block">Komentar Singkat:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" name="comment" class="form-control form-control-sm" placeholder="Contoh: Enak banget, bumbunya pas..." maxlength="500">
+                                                        <button type="submit" class="btn btn-warning btn-sm fw-bold px-3">
+                                                            <i class="fa-solid fa-paper-plane me-1"></i> Kirim Ulasan
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Customer & Delivery Notes -->
             <div class="card border-0 shadow-sm rounded-4 p-4">
-                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-location-dot text-danger me-2"></i> Informai Pengiriman &amp; Penerima</h5>
+                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-location-dot text-danger me-2"></i> Informasi Pengiriman &amp; Penerima</h5>
 
                 <div class="row g-3">
                     <div class="col-md-6">
