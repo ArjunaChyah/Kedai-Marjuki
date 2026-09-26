@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Buyer;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\CartService;
@@ -36,7 +36,7 @@ class CheckoutController extends Controller
         $user = auth()->user();
         $tableNumber = session('table_number');
 
-        return view('buyer.checkout', compact('cart', 'user', 'tableNumber'));
+        return view('user.checkout', compact('cart', 'user', 'tableNumber'));
     }
 
     public function process(Request $request)

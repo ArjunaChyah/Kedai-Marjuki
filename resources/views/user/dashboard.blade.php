@@ -84,7 +84,7 @@
     <!-- Main Navigation Grid -->
     <div class="row g-3 mb-5">
         <div class="col-6 col-md-4 col-lg-2">
-            <a href="{{ route('buyer.dashboard') }}" class="card border-0 shadow-sm rounded-4 p-3 text-center text-decoration-none bg-danger text-white hover-lift">
+            <a href="{{ route('user.dashboard') }}" class="card border-0 shadow-sm rounded-4 p-3 text-center text-decoration-none bg-danger text-white hover-lift">
                 <i class="fa-solid fa-border-all fs-2 mb-2"></i>
                 <small class="fw-bold d-block">Dashboard</small>
             </a>

@@ -42,7 +42,12 @@ class User extends Authenticatable
 
     public function isBuyer(): bool
     {
-        return $this->role === 'buyer';
+        return $this->role === 'buyer' || $this->role === 'user';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'buyer' || $this->role === 'user';
     }
 
     public function cart(): HasOne

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Buyer;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -42,7 +42,7 @@ class OrderController extends Controller
             ->take(5)
             ->get();
 
-        return view('buyer.dashboard', compact(
+        return view('user.dashboard', compact(
             'user',
             'totalOrders',
             'pendingOrders',
@@ -62,7 +62,7 @@ class OrderController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('buyer.orders.index', compact('orders'));
+        return view('user.orders.index', compact('orders'));
     }
 
     public function show(Order $order)
@@ -76,7 +76,7 @@ class OrderController extends Controller
 
         $order->load(['items.product', 'reviews']);
 
-        return view('buyer.orders.show', compact('order'));
+        return view('user.orders.show', compact('order'));
     }
 
     public function receipt(Order $order)
@@ -101,7 +101,7 @@ class OrderController extends Controller
 
         $qrisSetting = $this->paymentService->getActiveQris();
 
-        return view('buyer.payment', compact('order', 'qrisSetting'));
+        return view('user.payment', compact('order', 'qrisSetting'));
     }
 
     public function confirmQrisPayment(Order $order)

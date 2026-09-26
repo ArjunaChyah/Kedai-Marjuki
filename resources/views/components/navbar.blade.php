@@ -61,7 +61,7 @@
                                 <li><hr class="dropdown-divider"></li>
                             @endif
                             <li>
-                                <a class="dropdown-item py-2" href="{{ route('buyer.dashboard') }}">
+                                <a class="dropdown-item py-2" href="{{ route('user.dashboard') }}">
                                     <i class="fa-solid fa-border-all me-2"></i> Dashboard Saya
                                 </a>
                             </li>

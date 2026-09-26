@@ -100,7 +100,7 @@
                         <a href="{{ route('orders.show', $order->id) }}" class="btn btn-outline-danger rounded-pill fw-bold px-4">
                             <i class="fa-solid fa-eye me-1"></i> Lihat Detail Pesanan
                         </a>
-                        <a href="{{ route('buyer.dashboard') }}" class="btn btn-secondary rounded-pill fw-bold px-4">
+                        <a href="{{ route('user.dashboard') }}" class="btn btn-secondary rounded-pill fw-bold px-4">
                             Ke Dashboard Saya
                         </a>
                     </div>

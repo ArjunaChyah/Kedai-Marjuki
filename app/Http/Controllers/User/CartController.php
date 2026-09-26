@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Buyer;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\CartService;
@@ -19,7 +19,7 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->cartService->getCartDetails(auth()->user());
-        return view('buyer.cart', compact('cart'));
+        return view('user.cart', compact('cart'));
     }
 
     public function add(Request $request)

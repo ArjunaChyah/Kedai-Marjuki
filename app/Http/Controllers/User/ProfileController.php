@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Buyer;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('buyer.profile', compact('user'));
+        return view('user.profile', compact('user'));
     }
 
     public function update(Request $request)
