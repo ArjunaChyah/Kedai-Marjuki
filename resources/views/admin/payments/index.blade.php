@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layout')
 
 @section('title', 'Verifikasi Pembayaran - Kedai Marjuki\'S')
 @section('page_title', 'Verifikasi Pembayaran QRIS & Tunai')

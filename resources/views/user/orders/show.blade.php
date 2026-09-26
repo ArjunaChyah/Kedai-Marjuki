@@ -12,6 +12,9 @@
             <h2 class="fw-bold text-dark mb-0">Detail Pesanan: <span class="font-monospace text-danger">{{ $order->order_number }}</span></h2>
         </div>
 
+        {{-- ================================================================= --}}
+        {{-- [FITUR 1] TOMBOL CETAK STRUK KASIR TERMAL 58MM                    --}}
+        {{-- ================================================================= --}}
         <div class="d-flex gap-2">
             <a href="{{ route('orders.receipt', $order->id) }}" target="_blank" class="btn btn-outline-dark rounded-pill fw-bold">
                 <i class="fa-solid fa-print me-1"></i> Cetak Struk
@@ -46,7 +49,9 @@
         };
     @endphp
 
-    <!-- Live Interactive Status Tracker -->
+    {{-- ========================================================================= --}}
+    {{-- [FITUR 3] LIVE INTERACTIVE ORDER STATUS TRACKER (REAL-TIME 4 TAHAP)       --}}
+    {{-- ========================================================================= --}}
     <div id="liveTrackerBox" class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
         @if ($order->order_status === 'cancelled')
             <div class="alert alert-danger border-0 rounded-3 mb-0 d-flex align-items-center gap-3">
@@ -190,7 +195,9 @@
             </div>
 
             @if ($order->order_status === 'completed' || $order->payment_status === 'paid')
-                <!-- Customer Review & Rating Section (Verified Purchase) -->
+                {{-- ========================================================================= --}}
+                {{-- [FITUR 4] SISTEM ULASAN & RATING BINTANG MENU (VERIFIED PURCHASE REVIEW)   --}}
+                {{-- ========================================================================= --}}
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 border-top border-4 border-warning">
                     <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <h5 class="fw-bold text-dark mb-0">
@@ -364,6 +371,9 @@
 @endpush
 
 @push('scripts')
+{{-- ========================================================================= --}}
+{{-- [FITUR 3 - SCRIPT] AUTO-POLLING REAL-TIME 3.5 DETIK (TANPA RELOAD BROWSER)--}}
+{{-- ========================================================================= --}}
 <script>
     // Live poll order status every 3.5 seconds
     const isCompleted = "{{ $order->order_status }}" === 'completed' && "{{ $order->payment_status }}" === 'paid';

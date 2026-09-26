@@ -17,6 +17,9 @@ class OrderController extends Controller
         $this->paymentService = $paymentService;
     }
 
+    /* ========================================================================= */
+    /* [USER DASHBOARD] - Statistik Ringkasan Belanja & Pesanan Terkini           */
+    /* ========================================================================= */
     public function dashboard()
     {
         $user = auth()->user();
@@ -52,6 +55,9 @@ class OrderController extends Controller
         ));
     }
 
+    /* ========================================================================= */
+    /* [DAFTAR PESANAN SAYA] - Riwayat Seluruh Transaksi Pelanggan               */
+    /* ========================================================================= */
     public function index()
     {
         $user = auth()->user();
@@ -65,6 +71,9 @@ class OrderController extends Controller
         return view('user.orders.index', compact('orders'));
     }
 
+    /* ========================================================================= */
+    /* [FITUR 3] LIVE STATUS TRACKER & DETAIL NOTA PESANAN                       */
+    /* ========================================================================= */
     public function show(Order $order)
     {
         $user = auth()->user();
@@ -79,6 +88,9 @@ class OrderController extends Controller
         return view('user.orders.show', compact('order'));
     }
 
+    /* ========================================================================= */
+    /* [FITUR 1] CETAK STRUK KASIR TERMAL 58MM (POS THERMAL RECEIPT)             */
+    /* ========================================================================= */
     public function receipt(Order $order)
     {
         $user = auth()->user();
@@ -90,9 +102,12 @@ class OrderController extends Controller
 
         $order->load('items.product');
 
-        return view('orders.receipt', compact('order'));
+        return view('user.orders.receipt', compact('order'));
     }
 
+    /* ========================================================================= */
+    /* [PEMBAYARAN QRIS / TUNAI]                                                 */
+    /* ========================================================================= */
     public function payment(Order $order)
     {
         if ($order->user_id !== auth()->id() && !auth()->user()->isAdmin()) {

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layout')
 
 @section('title', 'Kelola Pesanan - Kedai Marjuki\'S')
 @section('page_title', 'Manajemen Pesanan Kedai')

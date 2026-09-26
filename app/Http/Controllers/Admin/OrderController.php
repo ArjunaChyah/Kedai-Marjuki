@@ -17,6 +17,9 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
+    /* ========================================================================= */
+    /* [KELOLA SEMUA PESANAN] - Daftar Transaksi Masuk, Filter & Pencarian        */
+    /* ========================================================================= */
     public function index(Request $request)
     {
         $query = Order::with('user');
@@ -43,12 +46,18 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
+    /* ========================================================================= */
+    /* [DETAIL NOTA PESANAN ADMIN & KASIR]                                       */
+    /* ========================================================================= */
     public function show(Order $order)
     {
         $order->load(['user', 'items.product']);
         return view('admin.orders.show', compact('order'));
     }
 
+    /* ========================================================================= */
+    /* [KASIR / DAPUR] UPDATE STATUS ALUR PESANAN (Memicu Live Tracker Pembeli)  */
+    /* ========================================================================= */
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
@@ -63,6 +72,9 @@ class OrderController extends Controller
         }
     }
 
+    /* ========================================================================= */
+    /* [FITUR 2] SMART TABLE QR ORDERING (Generate Meja 1-10 & URL Barcode)      */
+    /* ========================================================================= */
     public function tablesQr()
     {
         $tables = [];

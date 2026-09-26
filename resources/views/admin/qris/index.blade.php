@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layout')
 
 @section('title', 'Pengaturan QRIS - Kedai Marjuki\'S')
 @section('page_title', 'Pengaturan & Upload QRIS Kedai')

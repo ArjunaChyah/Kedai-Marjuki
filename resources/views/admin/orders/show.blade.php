@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layout')
 
 @section('title', 'Kelola Pesanan #' . $order->order_number . ' - Kedai Marjuki\'S')
 @section('page_title', 'Detail & Update Status Pesanan')
@@ -9,6 +9,9 @@
         <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Daftar Pesanan
     </a>
 
+    {{-- ================================================================= --}}
+    {{-- [FITUR 1] TOMBOL CETAK STRUK KASIR TERMAL 58MM                    --}}
+    {{-- ================================================================= --}}
     <a href="{{ route('orders.receipt', $order->id) }}" target="_blank" class="btn btn-dark btn-sm rounded-pill fw-bold shadow-sm px-3">
         <i class="fa-solid fa-print me-1"></i> Cetak Struk Kasir (58mm)
     </a>
@@ -83,7 +86,9 @@
     </div>
 
     <!-- Right Column: Status & Admin Controls -->
-    <div class="col-lg-4">
+        {{-- ========================================================================= --}}
+        {{-- [KASIR / DAPUR] KONTROL UPDATE STATUS ALUR PESANAN (REAL-TIME LIVE SYNC)  --}}
+        {{-- ========================================================================= --}}
         <!-- Update Order Status Form -->
         <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
             <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-sliders text-danger me-2"></i> Update Status Pesanan</h5>

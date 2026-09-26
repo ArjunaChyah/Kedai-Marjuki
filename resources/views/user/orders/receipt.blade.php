@@ -216,6 +216,9 @@
         </button>
     </div>
 
+    {{-- ========================================================================= --}}
+    {{-- [FITUR 1] LEMBAR CETAK STRUK KASIR TERMAL 58MM (POS THERMAL RECEIPT)       --}}
+    {{-- ========================================================================= --}}
     <!-- Lembar Struk Kasir Termal 58mm -->
     <div class="receipt-card">
         

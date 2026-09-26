@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    /* ========================================================================= */
+    /* [KATALOG MENU] - Daftar Semua Menu, Pencarian & Filter Harga               */
+    /* ========================================================================= */
     public function index(Request $request)
     {
         $categories = Category::all();
@@ -26,7 +29,7 @@ class ProductController extends Controller
             $query->where('name', 'LIKE', "%{$search}%");
         }
 
-        // Sorting feature
+        // Fitur Pengurutan Harga (Termurah / Termahal / Abjad)
         if ($request->filled('sort')) {
             switch ($request->sort) {
                 case 'price_asc':
@@ -51,9 +54,12 @@ class ProductController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
 
-        return view('products.index', compact('products', 'categories'));
+        return view('user.products.index', compact('products', 'categories'));
     }
 
+    /* ========================================================================= */
+    /* [DETAIL MENU & ULASAN] - Tampilan Rincian Menu & Testimoni Pelanggan       */
+    /* ========================================================================= */
     public function show(string $slug)
     {
         $product = Product::with(['category', 'reviews.user'])
@@ -62,7 +68,7 @@ class ProductController extends Controller
             ->first();
 
         if (!$product) {
-            // Try matching by converted slug from name
+            // Cocokkan berdasarkan slug konversi nama
             $product = Product::with('category')->get()->first(function ($p) use ($slug) {
                 return Str::slug($p->name) === $slug;
             });
@@ -72,7 +78,7 @@ class ProductController extends Controller
             abort(404, 'Produk tidak ditemukan');
         }
 
-        // Auto repair slug if missing
+        // Auto repair slug jika kosong
         if (empty($product->slug)) {
             $product->slug = Str::slug($product->name);
             $product->save();
@@ -84,6 +90,6 @@ class ProductController extends Controller
             ->take(4)
             ->get();
 
-        return view('products.show', compact('product', 'relatedProducts'));
+        return view('user.products.show', compact('product', 'relatedProducts'));
     }
 }

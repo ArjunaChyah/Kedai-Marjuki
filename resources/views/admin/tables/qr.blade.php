@@ -1,4 +1,8 @@
-@extends('layouts.admin')
+@extends('admin.layout')
+
+{{-- ========================================================================= --}}
+{{-- [FITUR 2] SMART TABLE QR ORDERING (KARTU MEJA AKRILIK SIAP CETAK)        --}}
+{{-- ========================================================================= --}}
 
 @section('title', 'QR Code Meja Pelanggan - Kedai Marjuki\'S')
 @section('page_title', 'Smart Table QR Ordering')
